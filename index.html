@@ -1,0 +1,161 @@
+---
+layout: none
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Species Overview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .species-image {
+      width: 100px;
+      border-radius: 10px;
+    }
+
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .bionano-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background-color: red;
+      color: white;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+
+    .attribution {
+      font-size: 0.8em;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation" aria-label="Main navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ site.baseurl }}/">Genome Ark</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ site.baseurl }}/">About us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="speciesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Species
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="speciesDropdown">
+                {% for species in site.species %}
+                <li><a class="dropdown-item" href="{{ site.baseurl }}{{ species.url }}">{{ species.common_name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ site.baseurl }}/">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+    <section class="species-overview">
+      <h1 style="text-align:center;">Species Overview</h1>
+
+      <article>
+        <table role="grid" aria-label="Species Overview Table">
+          <caption class="visually-hidden">List of Species and Their Details</caption>
+          <thead>
+            <tr>
+              <th scope="col">Image</th>
+              <th scope="col">Common Name</th>
+              <th scope="col">Latin Name</th>
+              <th scope="col">Family</th>
+              <th scope="col">Order</th>
+              <th scope="col"># of Sequenced Samples</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for species in site.species %}
+            <tr>
+              <td>
+                <div class="image-wrapper">
+                  {% assign bionano_found = false %}
+                  {% for sample in species.samples %}
+                    {% if sample.datatype == "Bionano" %}
+                      {% assign bionano_found = true %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if bionano_found %}
+                    <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
+                  {% endif %}
+                  <a href="{{ site.url }}{{ site.baseurl }}{{ species.url }}">
+                    <img src="{{ site.url }}{{ site.baseurl }}{{ species.image }}" alt="{{ species.common_name }}" class="species-image">
+                  </a>
+                  <div class="attribution">{{ species.image_attribution }}</div>
+                </div>
+              </td>
+              <td>{{ species.common_name }}</td>
+              <td><i>{{ species.name }}</i></td>
+              <td>{{ species.family.name }}</td>
+              <td>{{ species.order.name }}</td>
+              <td>{{ species.samples | size }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </article>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    Author: Aleksander Janowiak
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
