@@ -107,47 +107,41 @@ layout: none
       <h1 style="text-align:center;">Species Overview</h1>
 
       <article>
-        <table role="grid" aria-label="Species Overview Table">
-          <caption class="visually-hidden">List of Species and Their Details</caption>
-          <thead>
-            <tr>
-              <th scope="col">Image</th>
-              <th scope="col">Common Name</th>
-              <th scope="col">Latin Name</th>
-              <th scope="col">Family</th>
-              <th scope="col">Order</th>
-              <th scope="col"># of Sequenced Samples</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class="container my-5">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for species in site.species %}
-            <tr>
-              <td>
-                <div class="image-wrapper">
-                  {% assign bionano_found = false %}
-                  {% for sample in species.samples %}
-                    {% if sample.datatype == "Bionano" %}
-                      {% assign bionano_found = true %}
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <a href="{{ site.url }}{{ site.baseurl }}{{ species.url }}" class="text-decoration-none text-dark">
+                  <div class="image-wrapper position-relative">
+                    {% assign bionano_found = false %}
+                    {% for sample in species.samples %}
+                      {% if sample.datatype == "Bionano" %}
+                        {% assign bionano_found = true %}
+                      {% endif %}
+                    {% endfor %}
+                    {% if bionano_found %}
+                      <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
                     {% endif %}
-                  {% endfor %}
-                  {% if bionano_found %}
-                    <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
-                  {% endif %}
-                  <a href="{{ site.url }}{{ site.baseurl }}{{ species.url }}">
-                    <img src="{{ site.url }}{{ site.baseurl }}{{ species.image }}" alt="{{ species.common_name }}" class="species-image">
-                  </a>
-                  <div class="attribution">{{ species.image_attribution }}</div>
-                </div>
-              </td>
-              <td>{{ species.common_name }}</td>
-              <td><i>{{ species.name }}</i></td>
-              <td>{{ species.family.name }}</td>
-              <td>{{ species.order.name }}</td>
-              <td>{{ species.samples | size }}</td>
-            </tr>
+                    <picture>
+                      <source srcset="{{ site.url }}{{ site.baseurl }}{{ species.image }}" media="(min-width: 768px)">
+                      <img src="{{ site.url }}{{ site.baseurl }}{{ species.image }}" class="card-img-top" alt="{{ species.common_name }}">
+                    </picture>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ species.common_name }}</h5>
+                    <p class="card-text"><i>{{ species.name }}</i></p>
+                    <p class="card-text small"><strong>Family:</strong> {{ species.family.name }}</p>
+                    <p class="card-text small"><strong>Order:</strong> {{ species.order.name }}</p>
+                    <p class="card-text small"><strong>Samples:</strong> {{ species.samples | size }}</p>
+                  </div>
+                </a>
+                <div class="attribution text-center small text-muted mt-2">{{ species.image_attribution }}</div>
+              </div>
+            </div>
             {% endfor %}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </article>
     </section>
   </main>
