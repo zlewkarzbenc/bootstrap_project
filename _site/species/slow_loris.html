@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>slow loris - Nycticebus coucang</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav.toc {
+      width: 20%;
+      background-color: #f1f1f1;
+      padding: 30px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    nav.toc h3 {
+      font-size: 1.4em;
+      color: #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #666;
+    }
+
+    nav.toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    nav.toc li {
+      margin-bottom: 15px;
+    }
+
+    nav.toc a {
+      text-decoration: none;
+      color: #333;
+      font-size: 1.1em;
+      padding: 5px 10px;
+      display: block;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+
+    nav.toc a:hover {
+      background-color: #ddd;
+      padding-left: 15px;
+    }
+
+    nav.toc a.active {
+      background-color: #ddd;
+      font-weight: bold;
+      padding-left: 15px;
+    }
+
+    nav.toc .nav-link.active {
+      background-color: #e0e5e0;
+      color: #4a584a;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-comment {
+      background-color: #e0e5e0;
+      color: #4a584a;
+      border: none;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-comment:hover {
+      background-color: #d0d5d0;
+      color: #4a584a;
+    }
+
+    main.content {
+      width: 60%;
+      padding: 40px;
+      background: white;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+    aside.social {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background-color: white;
+      border-left: 1px solid #ddd;
+    }
+
+    .social-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: auto;
+      margin-bottom: 30px;
+    }
+
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icons img {
+      width: 30px;
+      height: 30px;
+      transition: transform 0.2s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    .species-photo {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    img.species-img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 0;
+    }
+
+    .attribution {
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    table.samples {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    table.samples th, table.samples td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table.samples tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    h2 {
+      clear: both;
+      text-align: center;
+      position: relative;
+      margin-top: 50px;
+    }
+
+    h2::before, h2::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    h2::before {
+      left: 0;
+    }
+
+    h2::after {
+      right: 0;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+        border: 1px solid #d0d5d0;
+    }
+
+    .modal-header {
+        background-color: #e0e5e0;
+        border-bottom: 1px solid #d0d5d0;
+    }
+
+    .modal-title {
+        color: #4a584a;
+        font-weight: bold;
+    }
+
+    .modal .form-control {
+        border-color: #d0d5d0;
+        border-radius: 5px;
+    }
+
+    .modal .form-control:focus {
+        border-color: #4a584a;
+        box-shadow: 0 0 0 0.2rem rgba(74, 88, 74, 0.25);
+    }
+
+    .modal .form-label {
+        color: #4a584a;
+        font-weight: 500;
+    }
+
+    .modal .btn-success {
+        background-color: #e0e5e0;
+        color: #4a584a;
+        border: none;
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .modal .btn-success:hover {
+        background-color: #d0d5d0;
+        color: #4a584a;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Left: Table of Contents -->
+<nav id="toc" class="toc">
+  <h3>Contents</h3>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="#taxonomy">Taxonomy</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#samples">Sequencing Data</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#description">Description</a>
+    </li>
+  </ul>
+</nav>
+
+
+<!-- Middle: Main Content -->
+<main class="content" id="scrollspyMain" data-bs-spy="scroll" data-bs-target="#toc" data-bs-offset="0" data-bs-method="position" tabindex="0" style="position: relative;">
+  <h1>slow loris</h1>
+  
+  <!-- Taxonomy Section -->
+  <h2 id="taxonomy">Taxonomy</h2>
+  <p><b>Order:</b> <i>Primates</i></p>
+  <p><b>Family:</b> <i>Lorisidae</i></p>
+  <p><b>Species:</b> <i>Nycticebus coucang</i></p>
+
+  <!-- Sequencing Samples Table -->
+  <h2 id="samples">Sequencing Data</h2>
+  <table class="samples">
+    <thead>
+      <tr>
+        <th>Datatype</th>
+        <th>Individual</th>
+        <th>Bases</th>
+        <th>Coverage</th>
+        <th>File Size</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>PacBio HiFi (subreads)</td>
+        <td>mNycCou1</td>
+        <td>388.50 Gbp</td>
+        <td>110.97x</td>
+        <td>0.9 TiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Nycticebus_coucang/mNycCou1/genomic_data/pacbio_hifi/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>PacBio HiFi (.fq)</td>
+        <td>mNycCou1</td>
+        <td>110.73 Gb</td>
+        <td>31.63x</td>
+        <td>84.1 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Nycticebus_coucang/mNycCou1/genomic_data/pacbio_hifi/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>PacBio HiFi (.bam)</td>
+        <td>mNycCou1</td>
+        <td>110.77 Gbp</td>
+        <td>31.64x</td>
+        <td>377.6 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Nycticebus_coucang/mNycCou1/genomic_data/pacbio_hifi/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>Bionano</td>
+        <td>mNycCou1</td>
+        <td>N/A</td>
+        <td>387.42x</td>
+        <td>2.9 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Nycticebus_coucang/mNycCou1/genomic_data/bionano/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>Arima</td>
+        <td>mNycCou1</td>
+        <td>289.27 Gbp</td>
+        <td>82.62x</td>
+        <td>146.4 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Nycticebus_coucang/mNycCou1/genomic_data/arima/" target="_blank">🔗</a></td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <!-- Markdown Species Info -->
+  <section id="description">
+    <p>The Sunda slow loris (<em>Nycticebus coucang</em>) is a strepsirrhine primate native to Indonesia, specifically Sumatra and Java, as well as parts of Malaysia, Singapore, and Thailand. It is one of the more recognized species of slow loris, often falling victim to the illegal pet trade.</p>
+
+<h3 id="key-characteristics-of-nycticebus-coucang">Key Characteristics of <em>Nycticebus coucang</em></h3>
+
+<ul>
+  <li><strong>Appearance:</strong>
+    <ul>
+      <li>Relatively small primate, typically weighing between 0.9 and 2 kg (2.0 and 4.4 lb).</li>
+      <li>Thick, woolly fur, usually a grayish-brown color, with a distinctive darker stripe down its back.</li>
+      <li>Round head, short snout, and large, forward-facing eyes, adapted for nocturnal vision.</li>
+      <li>Short, stumpy tail.</li>
+    </ul>
+  </li>
+  <li><strong>Behavior:</strong>
+    <ul>
+      <li>Nocturnal and arboreal, spending most of its life in trees.</li>
+      <li>Known for its slow, deliberate movements, a defense mechanism against predators.</li>
+      <li>Solitary or lives in small family groups.</li>
+      <li>Uses scent marking, vocalizations, and body language for communication.</li>
+    </ul>
+  </li>
+  <li><strong>Venom:</strong>
+    <ul>
+      <li>Possesses a venomous bite, a rare trait among mammals.</li>
+      <li>Produces a toxin in glands on its elbows, which mixes with saliva.</li>
+      <li>The bite can cause painful swelling and allergic reactions in humans.</li>
+    </ul>
+  </li>
+  <li><strong>Diet:</strong>
+    <ul>
+      <li>Omnivorous, feeding on fruits, insects, small mammals, bird eggs, and sap.</li>
+    </ul>
+  </li>
+  <li><strong>Habitat:</strong>
+    <ul>
+      <li>Tropical rainforests, including primary and secondary forests.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="conservation-status-and-threats">Conservation Status and Threats</h3>
+
+<ul>
+  <li><strong>IUCN Status:</strong> Classified as <strong>Endangered</strong> by the IUCN.</li>
+  <li><strong>Threats:</strong>
+    <ul>
+      <li><strong>Habitat Loss:</strong> Deforestation due to logging, agriculture, and human development is a major threat.</li>
+      <li><strong>Illegal Pet Trade:</strong> The Sunda slow loris is highly sought after in the illegal pet trade, driven by its perceived “cuteness.”</li>
+      <li><strong>Traditional Medicine:</strong> It is also used in some traditional medicine practices.</li>
+      <li><strong>Social Media:</strong> Videos and images of slow lorises as pets increase demand for them.</li>
+    </ul>
+  </li>
+  <li><strong>Consequences of the Pet Trade:</strong>
+    <ul>
+      <li>Teeth are often cruelly removed without anesthesia, leading to infections and suffering.</li>
+      <li>Animals are kept in unsuitable conditions, leading to stress, malnutrition, and disease.</li>
+      <li>Removal from the wild disrupts populations and ecosystems.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="conservation-efforts">Conservation Efforts</h3>
+
+<ul>
+  <li>Raising awareness about the threats to Sunda slow lorises and the cruelty of the pet trade.</li>
+  <li>Protecting and restoring their rainforest habitats.</li>
+  <li>Enforcing laws against illegal wildlife trade.</li>
+  <li>Supporting rescue and rehabilitation efforts.</li>
+  <li>Promoting alternative livelihoods for local communities to reduce reliance on illegal wildlife trade.</li>
+</ul>
+
+<h3 id="additional-notes">Additional Notes</h3>
+
+<ul>
+  <li>The Sunda slow loris is an important part of the rainforest ecosystem.</li>
+  <li>It is crucial to remember that they are wild animals and not suitable as pets.</li>
+  <li>Supporting ethical tourism and conservation organizations is a way to help protect these animals.</li>
+  <li>Spreading accurate information is a key part of conservation.</li>
+</ul>
+
+  </section>
+
+  <div class="text-center my-5">
+    <button type="button" class="btn btn-comment" data-bs-toggle="modal" data-bs-target="#commentModal">
+      Add Comment
+    </button>
+  </div>
+  
+</main>
+
+<!-- Right: Social Media Icons -->
+<aside class="social">
+  <div class="species-photo">
+    <img src="http://localhost:4000/genome_ark/assets/img/nycticebus_coucang.jpg" alt="slow loris" class="species-img">
+    <div class="attribution">CC BY-SA 3.0 David Haring/Duke Lemur Center (Wikimedia)</div>
+  </div>
+  <div class="social-icons">
+    <a href="https://twitter.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/twitter-icon.png" alt="Twitter"></a>
+    <a href="https://facebook.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/facebook-icon.png" alt="Facebook"></a>
+    <a href="https://instagram.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/instagram-icon.png" alt="Instagram"></a>
+  </div>
+</aside>
+
+<!-- Comment Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentModalLabel">Add Your Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="commentName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="commentName" required>
+          </div>
+          <div class="mb-3">
+            <label for="commentEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="commentEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="commentText" class="form-label">Your Comment</label>
+            <textarea class="form-control" id="commentText" rows="4" required></textarea>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">Submit Comment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+      target: '#toc'
+    });
+  });
+</script>
+</body>
+</html>

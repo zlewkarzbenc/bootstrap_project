@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>rifleman - Acanthisitta chloris</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav.toc {
+      width: 20%;
+      background-color: #f1f1f1;
+      padding: 30px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    nav.toc h3 {
+      font-size: 1.4em;
+      color: #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #666;
+    }
+
+    nav.toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    nav.toc li {
+      margin-bottom: 15px;
+    }
+
+    nav.toc a {
+      text-decoration: none;
+      color: #333;
+      font-size: 1.1em;
+      padding: 5px 10px;
+      display: block;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+
+    nav.toc a:hover {
+      background-color: #ddd;
+      padding-left: 15px;
+    }
+
+    nav.toc a.active {
+      background-color: #ddd;
+      font-weight: bold;
+      padding-left: 15px;
+    }
+
+    nav.toc .nav-link.active {
+      background-color: #e0e5e0;
+      color: #4a584a;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-comment {
+      background-color: #e0e5e0;
+      color: #4a584a;
+      border: none;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-comment:hover {
+      background-color: #d0d5d0;
+      color: #4a584a;
+    }
+
+    main.content {
+      width: 60%;
+      padding: 40px;
+      background: white;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+    aside.social {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background-color: white;
+      border-left: 1px solid #ddd;
+    }
+
+    .social-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: auto;
+      margin-bottom: 30px;
+    }
+
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icons img {
+      width: 30px;
+      height: 30px;
+      transition: transform 0.2s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    .species-photo {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    img.species-img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 0;
+    }
+
+    .attribution {
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    table.samples {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    table.samples th, table.samples td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table.samples tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    h2 {
+      clear: both;
+      text-align: center;
+      position: relative;
+      margin-top: 50px;
+    }
+
+    h2::before, h2::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    h2::before {
+      left: 0;
+    }
+
+    h2::after {
+      right: 0;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+        border: 1px solid #d0d5d0;
+    }
+
+    .modal-header {
+        background-color: #e0e5e0;
+        border-bottom: 1px solid #d0d5d0;
+    }
+
+    .modal-title {
+        color: #4a584a;
+        font-weight: bold;
+    }
+
+    .modal .form-control {
+        border-color: #d0d5d0;
+        border-radius: 5px;
+    }
+
+    .modal .form-control:focus {
+        border-color: #4a584a;
+        box-shadow: 0 0 0 0.2rem rgba(74, 88, 74, 0.25);
+    }
+
+    .modal .form-label {
+        color: #4a584a;
+        font-weight: 500;
+    }
+
+    .modal .btn-success {
+        background-color: #e0e5e0;
+        color: #4a584a;
+        border: none;
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .modal .btn-success:hover {
+        background-color: #d0d5d0;
+        color: #4a584a;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Left: Table of Contents -->
+<nav id="toc" class="toc">
+  <h3>Contents</h3>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="#taxonomy">Taxonomy</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#samples">Sequencing Data</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#description">Description</a>
+    </li>
+  </ul>
+</nav>
+
+
+<!-- Middle: Main Content -->
+<main class="content" id="scrollspyMain" data-bs-spy="scroll" data-bs-target="#toc" data-bs-offset="0" data-bs-method="position" tabindex="0" style="position: relative;">
+  <h1>rifleman</h1>
+  
+  <!-- Taxonomy Section -->
+  <h2 id="taxonomy">Taxonomy</h2>
+  <p><b>Order:</b> <i>Passeriformes</i></p>
+  <p><b>Family:</b> <i>Acanthisittidae</i></p>
+  <p><b>Species:</b> <i>Acanthisitta chloris</i></p>
+
+  <!-- Sequencing Samples Table -->
+  <h2 id="samples">Sequencing Data</h2>
+  <table class="samples">
+    <thead>
+      <tr>
+        <th>Datatype</th>
+        <th>Individual</th>
+        <th>Bases</th>
+        <th>Coverage</th>
+        <th>File Size</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>PacBio HiFi (subreads)</td>
+        <td>bAcaChl1</td>
+        <td>68.95 Gbp</td>
+        <td>65.67x</td>
+        <td>118.5 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Acanthisitta_chloris/bAcaChl4/genomic_data/arima/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>10x</td>
+        <td>bAcaChl1</td>
+        <td>78.23 Gbp</td>
+        <td>74.50x</td>
+        <td>36.4 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Acanthisitta_chloris/bAcaChl1/genomic_data/10x/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>Bionano</td>
+        <td>bAcaChl1</td>
+        <td>N/A</td>
+        <td>592.44x</td>
+        <td>639.9 MiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Acanthisitta_chloris/bAcaChl1/genomic_data/bionano/" target="_blank">🔗</a></td>
+      </tr>
+      
+      <tr>
+        <td>Arima</td>
+        <td>bAcaChl4</td>
+        <td>94.23 Gbp</td>
+        <td>89.74x</td>
+        <td>56.6 GiB</td>
+        <td><a href="https://genomeark.s3.amazonaws.com/index.html?prefix=species/Acanthisitta_chloris/bAcaChl4/genomic_data/arima/" target="_blank">🔗</a></td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <!-- Markdown Species Info -->
+  <section id="description">
+    <p>The rifleman (<em>Acanthisitta chloris</em>) is a diminutive, insect-eating bird, uniquely endemic to the diverse landscapes of New Zealand. Holding the distinction of being one of the smallest avian species in the region, it is a fascinating member of the ancient Acanthisittidae family, a group of birds found exclusively in New Zealand. This family represents some of the most primitive lineages within the passerine order, offering valuable insights into avian evolution.</p>
+
+<h3 id="key-characteristics">Key Characteristics</h3>
+
+<ul>
+  <li><strong>Appearance:</strong>
+    <ul>
+      <li>The rifleman is remarkably small, typically measuring around 8 cm in length and weighing between 6 to 7 grams, making it a lightweight and agile creature.</li>
+      <li>Males exhibit vibrant green plumage across their back, providing excellent camouflage within the dense foliage, complemented by a yellowish underside. This coloration is more pronounced during the breeding season.</li>
+      <li>Females, in contrast, display a more subdued palette, with predominantly brownish tones that offer effective camouflage throughout the year.</li>
+      <li>Both sexes share a distinctive short, thin, and slightly upturned bill, perfectly adapted for probing into crevices to extract insects.</li>
+    </ul>
+  </li>
+  <li><strong>Reproduction:</strong>
+    <ul>
+      <li>Riflemen construct intricate, dome-shaped nests using a variety of natural materials, including moss, feathers, and soft plant fibers. These nests are typically well-hidden in tree hollows, rock crevices, or dense vegetation.</li>
+      <li>They lay clutches of 3 to 5 small, white eggs. The incubation period lasts approximately 18-21 days.</li>
+      <li>Both parents actively participate in the crucial task of feeding the chicks, ensuring their rapid growth and development. The chicks fledge after about 21-24 days.</li>
+    </ul>
+  </li>
+  <li><strong>Habitat:</strong>
+    <ul>
+      <li>The rifleman thrives in a variety of forest environments, including native beech forests, exotic plantations, and regenerating scrubland.</li>
+      <li>It demonstrates a preference for dense vegetation and the complex structures of tree trunks, which provide ample opportunities for foraging and nesting. They are often found at varying altitudes, from sea level up to montane forests.</li>
+    </ul>
+  </li>
+  <li><strong>Diet:</strong>
+    <ul>
+      <li>As an insectivorous bird, the rifleman’s diet consists primarily of small insects, spiders, and other invertebrates.</li>
+      <li>It employs a foraging strategy of gleaning insects from tree bark, foliage, and the undersides of leaves, using its fine bill to pick out tiny prey.</li>
+    </ul>
+  </li>
+  <li><strong>Behavior:</strong>
+    <ul>
+      <li>Riflemen are known for their agile and active behavior, frequently observed hopping along tree trunks and branches with remarkable dexterity.</li>
+      <li>They communicate through a series of high-pitched, rapid calls, which serve various purposes, including territorial defense and mate attraction. These calls are often the first indication of their presence.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="unique-adaptations">Unique Adaptations</h3>
+
+<ul>
+  <li><strong>Small Size:</strong> The rifleman’s diminutive size is a significant advantage, enabling it to access narrow crevices and exploit foraging niches that are inaccessible to larger bird species.</li>
+  <li><strong>Camouflage:</strong> The green and brown plumage of the rifleman provides exceptional camouflage, allowing it to blend seamlessly into its forest environment and evade detection by predators.</li>
+  <li><strong>Specialized Feet:</strong> Its strong feet and sharp claws are perfectly adapted for clinging to vertical surfaces, enabling it to forage efficiently on tree trunks and branches, even in challenging conditions.</li>
+  <li><strong>Ancient Lineage:</strong> As a distinguished member of the Acanthisittidae family, the rifleman represents one of the most ancient and primitive groups of passerine birds, offering a unique window into avian evolutionary history.</li>
+</ul>
+
+<h3 id="conservation-status-and-threats">Conservation Status and Threats</h3>
+
+<ul>
+  <li><strong>Least Concern:</strong> The rifleman is currently classified as “Least Concern” by the IUCN, indicating that its populations are relatively stable across its range. However, localized declines have been observed in certain areas.</li>
+  <li><strong>Threats:</strong>
+    <ul>
+      <li>Habitat loss resulting from deforestation, agricultural expansion, and urbanization poses a significant threat to rifleman populations.</li>
+      <li>Predation by introduced mammalian predators, such as rats, stoats, and feral cats, has a devastating impact on their breeding success and overall survival rates.</li>
+      <li>Competition for limited nesting sites with other bird species, particularly introduced species, can further exacerbate their challenges.</li>
+      <li>Climate change-induced alterations in habitat, food availability, and weather patterns may have long-term consequences for rifleman populations.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="interesting-facts">Interesting Facts</h3>
+
+<ul>
+  <li>The rifleman’s common name is derived from its resemblance to the green uniforms worn by British riflemen, a testament to its distinctive coloration.</li>
+  <li>It is indeed one of the smallest bird species found in New Zealand, highlighting its unique ecological role.</li>
+  <li>Despite its small stature, the rifleman exhibits strong territorial behavior, vigorously defending its nesting area against intruders.</li>
+  <li>The rifleman’s flight capabilities are somewhat limited, relying on short, rapid flights between trees, reflecting its adaptation to a primarily arboreal lifestyle.</li>
+  <li>As a descendant of an ancient lineage of birds that predates New Zealand’s separation from Gondwana, the rifleman represents a living link to the distant past.</li>
+</ul>
+
+<h3 id="conservation-efforts">Conservation Efforts</h3>
+
+<ul>
+  <li>Implementation of predator control programs aimed at reducing the populations of introduced mammalian predators, thereby enhancing the survival rates of riflemen and other native bird species.</li>
+  <li>Active protection and restoration of native forests to safeguard and expand the rifleman’s natural habitat, ensuring its long-term viability.</li>
+  <li>Continuous monitoring of rifleman populations to track changes in distribution, abundance, and demographic trends, providing valuable data for adaptive management strategies.</li>
+  <li>Public education initiatives designed to raise awareness about the ecological significance of native bird species, including the rifleman, and promote community involvement in conservation efforts.</li>
+  <li>Ongoing research into the rifleman’s ecology, behavior, and genetics to gain a deeper understanding of its needs and inform evidence-based conservation strategies.</li>
+</ul>
+
+  </section>
+
+  <div class="text-center my-5">
+    <button type="button" class="btn btn-comment" data-bs-toggle="modal" data-bs-target="#commentModal">
+      Add Comment
+    </button>
+  </div>
+  
+</main>
+
+<!-- Right: Social Media Icons -->
+<aside class="social">
+  <div class="species-photo">
+    <img src="http://localhost:4000/genome_ark/assets/img/acanthisitta_chloris.jpg" alt="rifleman" class="species-img">
+    <div class="attribution">CC BY-NC 2.0 Trevira1 (flickr)</div>
+  </div>
+  <div class="social-icons">
+    <a href="https://twitter.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/twitter-icon.png" alt="Twitter"></a>
+    <a href="https://facebook.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/facebook-icon.png" alt="Facebook"></a>
+    <a href="https://instagram.com/" target="_blank"><img src="http://localhost:4000/genome_ark/assets/img/instagram-icon.png" alt="Instagram"></a>
+  </div>
+</aside>
+
+<!-- Comment Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentModalLabel">Add Your Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="commentName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="commentName" required>
+          </div>
+          <div class="mb-3">
+            <label for="commentEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="commentEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="commentText" class="form-label">Your Comment</label>
+            <textarea class="form-control" id="commentText" rows="4" required></textarea>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">Submit Comment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+      target: '#toc'
+    });
+  });
+</script>
+</body>
+</html>

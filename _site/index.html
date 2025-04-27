@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Species Overview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .species-image {
+      width: 100px;
+      border-radius: 10px;
+    }
+
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .bionano-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background-color: red;
+      color: white;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+
+    .attribution {
+      font-size: 0.8em;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation" aria-label="Main navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/genome_ark/">Genome Ark</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/genome_ark/">About us</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="speciesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Species
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="speciesDropdown">
+                
+                <li><a class="dropdown-item" href="/genome_ark/species/acanthisitta_chloris.html">rifleman</a></li>
+                
+                <li><a class="dropdown-item" href="/genome_ark/species/northern_goshawk.html">northern goshawk</a></li>
+                
+                <li><a class="dropdown-item" href="/genome_ark/species/platypus.html">platypus</a></li>
+                
+                <li><a class="dropdown-item" href="/genome_ark/species/slow_loris.html">slow loris</a></li>
+                
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/genome_ark/">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+    <section class="species-overview">
+      <h1 style="text-align:center;">Species Overview</h1>
+
+      <article>
+        <div class="container my-5">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <a href="http://localhost:4000/genome_ark/species/acanthisitta_chloris.html" class="text-decoration-none text-dark">
+                  <div class="image-wrapper position-relative">
+                    
+                    
+                    
+                      <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
+                    
+                    <picture>
+                      <source srcset="http://localhost:4000/genome_ark/assets/img/acanthisitta_chloris.jpg" media="(min-width: 768px)">
+                      <img src="http://localhost:4000/genome_ark/assets/img/acanthisitta_chloris.jpg" class="card-img-top" alt="rifleman">
+                    </picture>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">rifleman</h5>
+                    <p class="card-text"><i>Acanthisitta chloris</i></p>
+                    <p class="card-text small"><strong>Family:</strong> Acanthisittidae</p>
+                    <p class="card-text small"><strong>Order:</strong> Passeriformes</p>
+                    <p class="card-text small"><strong>Samples:</strong> 4</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <a href="http://localhost:4000/genome_ark/species/northern_goshawk.html" class="text-decoration-none text-dark">
+                  <div class="image-wrapper position-relative">
+                    
+                    
+                    
+                    <picture>
+                      <source srcset="http://localhost:4000/genome_ark/assets/img/accipiter_gentilis.jpg" media="(min-width: 768px)">
+                      <img src="http://localhost:4000/genome_ark/assets/img/accipiter_gentilis.jpg" class="card-img-top" alt="northern goshawk">
+                    </picture>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">northern goshawk</h5>
+                    <p class="card-text"><i>Accipiter gentilis</i></p>
+                    <p class="card-text small"><strong>Family:</strong> Accipitridae</p>
+                    <p class="card-text small"><strong>Order:</strong> Accipitriformes</p>
+                    <p class="card-text small"><strong>Samples:</strong> 3</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <a href="http://localhost:4000/genome_ark/species/platypus.html" class="text-decoration-none text-dark">
+                  <div class="image-wrapper position-relative">
+                    
+                    
+                    
+                      <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
+                    
+                    <picture>
+                      <source srcset="http://localhost:4000/genome_ark/assets/img/ornithorhynchus_anatinus.jpg" media="(min-width: 768px)">
+                      <img src="http://localhost:4000/genome_ark/assets/img/ornithorhynchus_anatinus.jpg" class="card-img-top" alt="platypus">
+                    </picture>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">platypus</h5>
+                    <p class="card-text"><i>Ornithorhynchus anatinus</i></p>
+                    <p class="card-text small"><strong>Family:</strong> Ornithorhynchidae</p>
+                    <p class="card-text small"><strong>Order:</strong> Monotremata</p>
+                    <p class="card-text small"><strong>Samples:</strong> 5</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col">
+              <div class="card h-100 shadow-sm">
+                <a href="http://localhost:4000/genome_ark/species/slow_loris.html" class="text-decoration-none text-dark">
+                  <div class="image-wrapper position-relative">
+                    
+                    
+                    
+                      <div class="bionano-badge" aria-label="Bionano data available">Bionano</div>
+                    
+                    <picture>
+                      <source srcset="http://localhost:4000/genome_ark/assets/img/nycticebus_coucang.jpg" media="(min-width: 768px)">
+                      <img src="http://localhost:4000/genome_ark/assets/img/nycticebus_coucang.jpg" class="card-img-top" alt="slow loris">
+                    </picture>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">slow loris</h5>
+                    <p class="card-text"><i>Nycticebus coucang</i></p>
+                    <p class="card-text small"><strong>Family:</strong> Lorisidae</p>
+                    <p class="card-text small"><strong>Order:</strong> Primates</p>
+                    <p class="card-text small"><strong>Samples:</strong> 5</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    Author: Aleksander Janowiak
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
